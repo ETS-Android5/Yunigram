@@ -47,7 +47,8 @@ jobs:
       - name: Write file
         if: success()
         run: |
-          unzip $(ls modules/build_output_**.zip) -d modules
+          ls modules/build_output_**.zip
+          unzip "$(ls modules/build_output_**.zip)" -d modules
           mkdir -p out/assets/lspatch/modules && cp modules/**/app-release-unsigned.apk opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
           stat opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
           echo ${{ secrets.EXTRA }} | base64 --decode > TMessagesProj/src/main/java/tw/nekomimi/nekogram/Extra.java
