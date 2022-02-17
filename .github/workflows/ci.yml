@@ -47,7 +47,9 @@ jobs:
       - name: Write file
         if: success()
         run: |
-          mkdir -p out/assets/lspatch/modules && cp modules/**/app-release-unsigned.apk opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
+          mkdir -p out/assets/lspatch/modules
+          ls modules/**/app-release-unsigned.apk
+          cp modules/**/app-release-unsigned.apk opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
           stat opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
           echo ${{ secrets.EXTRA }} | base64 --decode > TMessagesProj/src/main/java/tw/nekomimi/nekogram/Extra.java
         env:
