@@ -38,6 +38,22 @@ jobs:
           key: gradle-builds-core-${{ github.sha }}
           restore-keys: |
             gradle-builds
+      - name: Cache native build
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.ccache
+            TMessagesProj/build/.lto-cache
+            core/core/build/.lto-cache
+          key: native-cache-${{ github.sha }}
+          restore-keys: native-cache-
+      - name: Install ccache
+        run: |
+          sudo apt-get install -y ccache
+          ccache -o max_size=1G
+          ccache -o hash_dir=false
+          ccache -o compiler_check='%compiler% -dumpmachine; %compiler% -dumpversion'
+          ccache -zp
       - name: Donwload Tmoe
         uses: dawidd6/action-download-artifact@v2
         with:
@@ -45,7 +61,6 @@ jobs:
           workflow: push_ci.yml
           path: modules
       - name: Write file
-        if: success()
         run: |
           mkdir -p out/assets/lspatch/modules
           cp modules/build_output_**.zip/apk/release/app-release-unsigned.apk out/assets/lspatch/modules/cc.ioctl.tmoe.bin
@@ -62,6 +77,7 @@ jobs:
           KEYSTORE_PASS: ${{ secrets.SIGN_KEYSTORE_PASSWORD }}
           ALIAS_NAME: ${{ secrets.SIGN_ALIAS }}
           ALIAS_PASS: ${{ secrets.SIGN_KEY_PASSWORD }}
+          NDK_CCACHE: ccache
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
