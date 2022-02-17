@@ -44,13 +44,20 @@ jobs:
           repo: cinit/TMoe
           workflow: push_ci.yml
           path: modules
+      - name: Write file
+        run: |
+          mkdir -p out/assets/lspatch/modules
+          cp **/app-release-unsigned.apk opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
+          stat opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
+          echo ${{ secrets.EXTRA }} > TMessagesProj/src/main/java/tw/nekomimi/nekogram/Extra.java
+        env:
+          EXTRA: ${{ secrets.EXTRA }}
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Build with Gradle
         run: |
-          echo ${{ secrets.SIGN_KEYSTORE_BASE64 }} | base64 -d > keystore.jks
-          ./gradlew :TMessagesProj:assemble
+          ./gradlew :TMessagesProj:assembleRelease
         env:
           KEYSTORE_PASS: ${{ secrets.SIGN_KEYSTORE_PASSWORD }}
           ALIAS_NAME: ${{ secrets.SIGN_ALIAS }}
@@ -62,4 +69,4 @@ jobs:
         if: ${{ !github.event.pull_request }}
         with:
           path: 'app/build/outputs/apk/release/*.apk'
-          name: QAuxiliary-release-${{ github.event.head_commit.id }}
+          name: Yunigram-release-${{ github.event.head_commit.id }}
