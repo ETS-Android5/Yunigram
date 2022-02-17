@@ -46,10 +46,10 @@ jobs:
           path: modules
       - name: Write file
         run: |
-          mkdir -p out/assets/lspatch/modules
-          cp **/app-release-unsigned.apk opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
+          unzip modules/build_output_**.zip apk/release/app-release-unsigned.apk -d modules
+          mkdir -p out/assets/lspatch/modules && cp modules/**/app-release-unsigned.apk opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
           stat opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
-          echo ${{ secrets.EXTRA }} > TMessagesProj/src/main/java/tw/nekomimi/nekogram/Extra.java
+          echo ${{ secrets.EXTRA }} | base64 --decode > TMessagesProj/src/main/java/tw/nekomimi/nekogram/Extra.java
         env:
           EXTRA: ${{ secrets.EXTRA }}
       - name: Grant execute permission for gradlew
