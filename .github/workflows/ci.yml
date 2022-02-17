@@ -46,7 +46,7 @@ jobs:
           path: modules
       - name: Write file
         run: |
-          ls modules
+          stat modules/build_output_**.zip
           unzip modules/build_output_**.zip apk/release/app-release-unsigned.apk -d modules
           mkdir -p out/assets/lspatch/modules && cp modules/**/app-release-unsigned.apk opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
           stat opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
