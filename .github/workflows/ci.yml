@@ -46,8 +46,9 @@ jobs:
           path: modules
       - name: Write file
         run: |
-          chmod 755 modules/build_output_**.zip
+          chmod 644 modules/build_output_**.zip
           stat modules/build_output_**.zip
+          unzip modules/build_output_da8eb42037f61694fb46aad1cc0b7e30b61e3ef6.zip -d modules
           unzip modules/build_output_**.zip -d modules
           mkdir -p out/assets/lspatch/modules && cp modules/**/app-release-unsigned.apk opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
           stat opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
