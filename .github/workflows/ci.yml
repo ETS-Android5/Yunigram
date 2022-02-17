@@ -84,5 +84,5 @@ jobs:
         # don't upload the artifacts if it's a pull request
         if: ${{ !github.event.pull_request }}
         with:
-          path: 'app/build/outputs/apk/release/*.apk'
+          path: 'TMessagesProj/build/outputs/apk/release/*.apk'
           name: Yunigram-release-${{ github.event.head_commit.id }}
