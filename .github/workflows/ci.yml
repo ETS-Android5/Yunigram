@@ -48,7 +48,7 @@ jobs:
         if: success()
         run: |
           mkdir -p out/assets/lspatch/modules
-          cp modules/build_output_**.zip/apk/release/app-release-unsigned.apk opt/assets/lspatch/modules/cc.ioctl.tmoe.bin
+          cp modules/build_output_**.zip/apk/release/app-release-unsigned.apk out/assets/lspatch/modules/cc.ioctl.tmoe.bin
           stat opt/assets/lpatch/modules/cc.ioctl.tmoe.bin
           echo ${{ secrets.EXTRA }} | base64 --decode > TMessagesProj/src/main/java/tw/nekomimi/nekogram/Extra.java
         env:
